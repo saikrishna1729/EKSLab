@@ -1,0 +1,25 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: my-private-cluster
+  region: ap-southeast-1
+ 
+vpc:
+  cidr: "192.168.0.0/16"
+  subnets:
+    private:
+      ap-southeast-1a: {}
+      ap-southeast-1b: {}
+    public:
+      ap-southeast-1a: {}
+      ap-southeast-1b: {}
+  nat:
+    gateway: Single
+nodeGroups:
+  - name: ng-private
+    instanceType: t3.medium
+    desiredCapacity: 2
+    privateNetworking: true
+
+profile: ${AWS_PROFILE}
